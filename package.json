@@ -3,13 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --mode-development",
+    "build": "vue-cli-service build --mode-production",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@tailwindcss/custom-forms": "^0.2.1",
+    "@tailwindcss/ui": "^0.7.2",
+    "autoprefixer": "^9",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "postcss": "^7",
+    "tailwindcss": "^1.0",
+    "tailwindcss-dark-mode": "^1.1.7",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
