@@ -7,36 +7,38 @@
     :key="item.number"
     class="p-6 mx-auto mt-4 bg-white rounded-md shadow-md"
   >
-    <div class="flex justify-between items-center">
-      <div class="flex justify-between">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="h-12 w-12 text-green-500 feather feather-book-open"
-        >
-          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-        </svg>
-      </div>
-      <div class="text-right">
-        <div
-          :class="item.number == 1 ? 'font-semibold' : ''"
-          class="text-xl font-medium text-gray-800"
-        >
-          {{ item.name }}
+    <router-link :to="`/surah/${item.number}`">
+      <div class="flex justify-between items-center">
+        <div class="flex justify-between">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-12 w-12 text-green-500 feather feather-book-open"
+          >
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
         </div>
-        <p class="text-gray-500 mt-2">
-          {{ item.englishNameTranslation }} ({{ item.englishName }})
-        </p>
+        <div class="text-right">
+          <div
+            :class="item.number == 1 ? 'font-semibold' : ''"
+            class="text-xl font-medium text-gray-800"
+          >
+            {{ item.name }}
+          </div>
+          <p class="text-gray-500 mt-2">
+            {{ item.englishNameTranslation }} ({{ item.englishName }})
+          </p>
+        </div>
       </div>
-    </div>
+    </router-link>
   </div>
 
   <div v-if="!keyword" class="flex justify-center flex-wrap">

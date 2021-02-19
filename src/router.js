@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Main from "@/pages/Main.vue";
+import Surah from "@/pages/Surah.vue";
 
 const routes = [
   {
@@ -11,6 +12,12 @@ const routes = [
     path: "/surah",
     name: "Main",
     component: Main,
+    meta: { guest: true },
+  },
+  {
+    path: "/surah/:id",
+    name: "Surah",
+    component: Surah,
     meta: { guest: true },
   },
 ];

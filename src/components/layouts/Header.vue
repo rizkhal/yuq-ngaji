@@ -4,8 +4,9 @@
   >
     <div class="flex items-center">
       <button
-        v-if="!$route.path == '/'"
-        class="text-gray-500 focus:outline-none lg:hidden"
+        v-if="$route.name != 'Main'"
+        @click="goBack"
+        class="text-gray-500 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,12 +50,22 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import Search from "@/components/layouts/Search.vue";
 
 export default {
   name: "Header",
   components: {
     Search,
+  },
+  setup() {
+    const router = useRouter();
+
+    const goBack = () => {
+      router.go(-1);
+    };
+
+    return { goBack };
   },
 };
 </script>
