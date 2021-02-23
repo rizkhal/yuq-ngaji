@@ -1,13 +1,13 @@
 <template>
-  <div class="overflow-auto flex-auto">
-    <div class="w-full flex p-4 relative items-center flex-col">
+  <div class="flex-auto md:overflow-auto">
+    <div class="w-full flex flex-col p-4 items-center flex-col md:relative">
       <div
         v-for="surah in data"
         :key="surah.number"
         class="bg-white w-full m-2 px-3 py-3 rounded-md"
       >
         <span
-          class="w-6 h-6 absolute bg-green-root rounded-full text-white text-xs flex items-center justify-center"
+          class="w-6 h-6 md:absolute bg-green-root rounded-full text-white text-xs flex items-center justify-center"
           >{{ surah.number }}</span
         >
         <div class="flex flex-col ml-10">
@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <div class="mr-3 overflow-auto flex-auto">
+  <div class="overflow-auto flex-auto">
     <div class="p-4">
       <div
         v-for="(item, index) in 100"
@@ -105,7 +105,7 @@
       </div>
     </div>
   </div>
-  <div class="w-1/4 mt-4 mr-2 flex-auto">
+  <div class="w-1/4 p-4 flex-auto hidden xl:block">
     <div class="bg-white m-2 rounded-md px-3 py-3">
       <div class="flex mb-6 relative items-center">
         <svg
