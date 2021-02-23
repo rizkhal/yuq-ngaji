@@ -18,7 +18,7 @@
       type="text"
       @input="onTyping"
       placeholder="Search"
-      class="form-input w-full sm:w-full xl:w-full rounded-md pl-10 px-4 focus:border-green-600 focus:outline-none focus:ring"
+      class="form-input w-full rounded-md pl-10 px-4 focus:border-green-600 focus:outline-none focus:ring"
     />
   </div>
 </template>

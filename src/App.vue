@@ -1,13 +1,17 @@
 <template>
-  <div class="flex h-screen bg-gray-200">
+  <div class="flex h-screen">
     <div class="flex-1 flex flex-col overflow-hidden">
       <Header />
-
-      <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-        <div class="mx-auto px-6 py-8">
-          <router-view />
-        </div>
-        <Footer />
+      <main
+        class="flex overflow-hidden bg-gray-200"
+      >
+        <LeftBar />
+        <Suspense>
+          <template #default>
+            <Playlists />
+          </template>
+          <template #fallback> Loading... </template>
+        </Suspense>
       </main>
     </div>
   </div>
@@ -15,12 +19,14 @@
 
 <script>
 import Header from "@/components/layouts/Header.vue";
-import Footer from "@/components/layouts/Footer.vue";
+import LeftBar from "@/components/layouts/LeftBar.vue";
+import Playlists from "@/components/layouts/Playlists.vue";
 
 export default {
   components: {
     Header,
-    Footer,
+    LeftBar,
+    Playlists,
   },
   name: "App",
 };

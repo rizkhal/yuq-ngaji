@@ -1,50 +1,94 @@
 <template>
-  <header
-    class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-green-500"
-  >
-    <div class="flex items-center">
-      <button
-        v-if="$route.name != 'Main'"
-        @click="goBack"
-        class="text-gray-500 focus:outline-none"
+  <header class="flex bg-white">
+    <div class="flex justify-center bg-green-root items-center py-4 px-6">
+      <svg
+        class="w-12 h-12 text-white"
+        data-name="Layer 1"
+        viewBox="0 0 64 64"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-arrow-left"
-        >
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-      </button>
+        <title />
+        <path
+          fill="white"
+          d="M32,49.33a1.49,1.49,0,0,1-.85-.26,17.6,17.6,0,0,0-4.28-2.14A19.6,19.6,0,0,0,22.45,46a15.76,15.76,0,0,1-5.23-1.27,15.14,15.14,0,0,1-4.91-3.68,1.5,1.5,0,0,1-.39-1V18.86a1.5,1.5,0,0,1,2.37-1.23,15.51,15.51,0,0,0,4.24,2.12,19.33,19.33,0,0,0,5.53.79c2.29.09,4.45.17,6.54,1.77A7.69,7.69,0,0,1,33.5,28.4V47.83a1.5,1.5,0,0,1-1.5,1.5ZM14.92,39.5A11.91,11.91,0,0,0,18.47,42a12.92,12.92,0,0,0,4.31,1,22.36,22.36,0,0,1,5.05,1,20.36,20.36,0,0,1,2.66,1.12V28.4a4.66,4.66,0,0,0-1.71-3.69c-1.35-1-2.82-1.09-4.84-1.17a22.12,22.12,0,0,1-6.33-.93,18.18,18.18,0,0,1-2.69-1.1Z"
+        />
+        <path
+          fill="white"
+          d="M32,49.33a1.5,1.5,0,0,1-1.5-1.5V28.4a7.68,7.68,0,0,1,2.88-6.06c2.12-1.63,4.28-1.71,6.57-1.79a19.33,19.33,0,0,0,5.53-.79,15.51,15.51,0,0,0,4.24-2.12,1.5,1.5,0,0,1,2.37,1.23V40.09a1.5,1.5,0,0,1-.39,1,15.14,15.14,0,0,1-4.91,3.68A15.76,15.76,0,0,1,41.55,46a19.6,19.6,0,0,0-4.43.89,17.6,17.6,0,0,0-4.28,2.14A1.49,1.49,0,0,1,32,49.33ZM49.08,21.51a18.18,18.18,0,0,1-2.69,1.1,22.12,22.12,0,0,1-6.33.93c-2,.08-3.49.13-4.82,1.15A4.67,4.67,0,0,0,33.5,28.4v16.8a20.36,20.36,0,0,1,2.66-1.12,22.36,22.36,0,0,1,5.05-1,12.92,12.92,0,0,0,4.31-1,11.91,11.91,0,0,0,3.55-2.55Z"
+        />
+        <path
+          fill="white"
+          d="M32,54.5a17.31,17.31,0,0,1-3.92-.45c-1.47-.34-2.92-.71-4.31-1.1a70.12,70.12,0,0,1-10.31-3.48,53.84,53.84,0,0,1-5.2-2.63,1.5,1.5,0,0,1-.75-1.3V27.69A1.5,1.5,0,0,1,9.77,26.4,19.58,19.58,0,0,0,13.12,28a1.5,1.5,0,1,1-1,2.82q-.81-.29-1.6-.65V44.68c1.34.74,2.73,1.43,4.16,2.06a67.74,67.74,0,0,0,9.9,3.33c1.36.37,2.77.73,4.2,1.07a14.48,14.48,0,0,0,6.49,0c1.43-.33,2.84-.69,4.19-1.07a67.68,67.68,0,0,0,9.91-3.33c1.43-.63,2.82-1.32,4.16-2.06V30.15q-.79.35-1.6.65a1.5,1.5,0,1,1-1-2.82,19.58,19.58,0,0,0,3.35-1.58,1.5,1.5,0,0,1,2.27,1.29V45.55a1.5,1.5,0,0,1-.75,1.3,53.84,53.84,0,0,1-5.2,2.63A70.06,70.06,0,0,1,40.23,53c-1.39.38-2.84.75-4.31,1.1A17.32,17.32,0,0,1,32,54.5Z"
+        />
+        <path
+          fill="white"
+          d="M32,16.5a4.5,4.5,0,0,1,0-9,1.5,1.5,0,0,1,0,3,1.5,1.5,0,1,0,1.42,2,1.5,1.5,0,0,1,2.83,1A4.51,4.51,0,0,1,32,16.5Z"
+        />
+        <path
+          fill="white"
+          d="M9,52.5a1.5,1.5,0,0,1-.75-2.8l5.05-2.89a1.5,1.5,0,0,1,1.49,2.6L9.75,52.3A1.49,1.49,0,0,1,9,52.5Z"
+        />
+        <path
+          fill="white"
+          d="M56,52.5a1.49,1.49,0,0,1-.74-.2L50.2,49.41a1.5,1.5,0,0,1,1.49-2.6l5.05,2.89A1.5,1.5,0,0,1,56,52.5Z"
+        />
+      </svg>
+    </div>
+    <div class="flex items-center justify-center w-full">
+      <div class="relative w-full lg:mx-0">
+        <!-- search icon -->
+        <span class="absolute inset-y-0 left-8 flex items-center">
+          <svg class="h-8 w-8 text-green-root" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
 
-      <Search />
+        <!-- search input -->
+        <input
+          type="text"
+          @input="onTyping"
+          placeholder="Search here for surah or ayah"
+          class="h-14 w-full text-xl pl-20 text-gray-400 rounded-full focus:border-green-600 focus:outline-none focus:ring"
+        />
+      </div>
     </div>
 
-    <div class="flex items-center">
-      <button class="flex mx-4 text-gray-600 focus:outline-none">
-        <svg
-          class="h-6 w-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+    <div class="flex w-60 items-center">
+      <div class="mr-4">
+        <button
+          class="p-2 justify-center rounded-full bg-gray-100 text-gray-600 focus:outline-none"
         >
-          <path
-            d="M15 17H20L18.5951 15.5951C18.2141 15.2141 18 14.6973 18 14.1585V11C18 8.38757 16.3304 6.16509 14 5.34142V5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5V5.34142C7.66962 6.16509 6 8.38757 6 11V14.1585C6 14.6973 5.78595 15.2141 5.40493 15.5951L4 17H9M15 17V18C15 19.6569 13.6569 21 12 21C10.3431 21 9 19.6569 9 18V17M15 17H9"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
+          <svg
+            class="w-6 h-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 17H20L18.5951 15.5951C18.2141 15.2141 18 14.6973 18 14.1585V11C18 8.38757 16.3304 6.16509 14 5.34142V5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5V5.34142C7.66962 6.16509 6 8.38757 6 11V14.1585C6 14.6973 5.78595 15.2141 5.40493 15.5951L4 17H9M15 17V18C15 19.6569 13.6569 21 12 21C10.3431 21 9 19.6569 9 18V17M15 17H9"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <img
+          class="w-10 h-10 rounded-full"
+          src="@/assets/ayu.jpg"
+          alt="Ayu Wahyuni"
+        />
+        <p class="text-xs mx-4 text-gray-700">Ayu Wahyuni</p>
+      </div>
     </div>
   </header>
 </template>

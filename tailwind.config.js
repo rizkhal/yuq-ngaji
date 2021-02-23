@@ -18,6 +18,14 @@ module.exports = {
       animation: {
         shimmer: "shimmer 1s ease-in-out infinite",
       },
+      colors: {
+        green: {
+          root: "#179f87",
+        },
+      },
+      fontSize: {
+        '1xs': ['0.60em']
+      }
     },
   },
   variants: {
