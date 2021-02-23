@@ -5,7 +5,8 @@
       <main
         class="flex overflow-hidden bg-gray-200"
       >
-        <LeftBar />
+        <Sidebar />
+
         <Suspense>
           <template #default>
             <Playlists />
@@ -18,14 +19,14 @@
 </template>
 
 <script>
-import Header from "@/components/layouts/Header.vue";
-import LeftBar from "@/components/layouts/LeftBar.vue";
-import Playlists from "@/components/layouts/Playlists.vue";
+import Header from "@/components/Header.vue";
+import Sidebar from "@/components/Sidebar.vue";
+import Playlists from "@/components/Playlists.vue";
 
 export default {
   components: {
     Header,
-    LeftBar,
+    Sidebar,
     Playlists,
   },
   name: "App",

@@ -54,6 +54,6 @@
 </template>
 <script>
 export default {
-  name: "LeftBar",
+  name: "Sidebar",
 };
 </script>

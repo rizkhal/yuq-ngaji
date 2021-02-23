@@ -95,13 +95,9 @@
 
 <script>
 import { useRouter } from "vue-router";
-import Search from "@/components/layouts/Search.vue";
 
 export default {
   name: "Header",
-  components: {
-    Search,
-  },
   setup() {
     const router = useRouter();
 
