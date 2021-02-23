@@ -94,18 +94,8 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
-
 export default {
   name: "Header",
-  setup() {
-    const router = useRouter();
-
-    const goBack = () => {
-      router.go(-1);
-    };
-
-    return { goBack };
-  },
+  setup() {},
 };
 </script>

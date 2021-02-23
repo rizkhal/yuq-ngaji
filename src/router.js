@@ -1,17 +1,17 @@
-import { createRouter, createWebHistory } from "vue-router";
+// import { createRouter, createWebHistory } from "vue-router";
 
-const routes = [
-  {
-    // path: "/surah",
-    // name: "Main",
-    // component: Main,
-    // meta: { guest: true },
-  },
-];
+// const routes = [
+//   {
+//     // path: "/surah",
+//     // name: "Main",
+//     // component: Main,
+//     // meta: { guest: true },
+//   },
+// ];
 
-const router = createRouter({
-  routes: routes,
-  history: createWebHistory(),
-});
+// const router = createRouter({
+//   routes: routes,
+//   history: createWebHistory(),
+// });
 
-export default router;
+// export default router;
