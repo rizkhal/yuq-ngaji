@@ -7,7 +7,7 @@
 
         <Suspense>
           <template #default>
-            <div class="pb-36 w-1/4 flex-auto md:overflow-auto">
+            <div class="pb-96 w-1/4 flex-auto md:overflow-auto">
               <LeftAsync @set="surah" />
             </div>
           </template>
@@ -19,7 +19,7 @@
         </Suspense>
         <Suspense>
           <template #default>
-            <div class="pb-36 w-3/6 flex-auto md:overflow-auto">
+            <div class="pb-96 w-3/6 flex-auto md:overflow-auto">
               <div class="p-4">
                 <CenterAsync :surah="numberOfSurah" />
               </div>
@@ -70,6 +70,9 @@ export default {
 
     const surah = async (number) => {
       numberOfSurah.value = await number;
+      document
+        .getElementById("top")
+        .scrollIntoView({ behavior: "smooth", block: "center" });
     };
 
     return { error, surah, numberOfSurah };
