@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="flex w-60 items-center">
+    <div class="flex w-60 items-center justify-center">
       <div class="mr-4">
         <button
           class="p-2 justify-center rounded-full bg-gray-100 text-gray-600 focus:outline-none"
@@ -87,7 +87,7 @@
           src="@/assets/ayu.jpg"
           alt="Ayu Wahyuni"
         />
-        <p class="text-xs mx-4 text-gray-700">Ayu Wahyuni</p>
+        <!-- <p class="text-xs mx-4 text-gray-700">Rizkhal Lamaau</p> -->
       </div>
     </div>
   </header>

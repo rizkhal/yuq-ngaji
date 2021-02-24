@@ -2,7 +2,7 @@
   <div class="flex">
     <div class="bg-white h-screen w-24 overflow-auto">
       <div class="flex my-6 flex-col justify-center items-center">
-        <div class="p-3 bg-gray-100 rounded-md cursor-pointer">
+        <div class="p-3 bg-gray-200 rounded-md cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -17,7 +17,7 @@
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
           </svg>
         </div>
-        <div class="my-6 p-3 bg-gray-100 rounded-md cursor-pointer">
+        <div class="my-6 p-3 bg-gray-200 rounded-md cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -33,7 +33,7 @@
             ></path>
           </svg>
         </div>
-        <div class="p-3 bg-gray-100 rounded-md cursor-pointer">
+        <div class="p-3 bg-gray-200 rounded-md cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

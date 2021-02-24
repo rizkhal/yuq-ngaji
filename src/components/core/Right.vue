@@ -62,7 +62,7 @@ const asyncSetTimeout = (timeout) => {
 export default {
   name: "Right",
   async setup() {
-    await asyncSetTimeout(3000);
+    await asyncSetTimeout(1000);
   },
 };
 </script>

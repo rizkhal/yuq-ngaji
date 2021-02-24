@@ -1,18 +1,20 @@
 <template>
   <div class="w-full flex flex-col p-4 items-center md:relative">
     <div
-      v-for="surah in data"
-      :key="surah.number"
-      class="bg-white w-full m-2 px-3 py-3 rounded-md"
+      v-for="item in data"
+      :key="item.number"
+      :class="surah === item.number ? 'border-2 border-green-root' : ''"
+      class="cursor-pointer bg-white w-full border-2 border-white m-2 px-3 py-3 rounded-md"
+      @click="$emit('set', item.number)"
     >
       <span
         class="w-6 h-6 md:absolute bg-green-root rounded-full text-white text-xs flex items-center justify-center"
-        >{{ surah.number }}</span
+        >{{ item.number }}</span
       >
       <div class="flex flex-col ml-10">
-        <strong class="text-md"> {{ surah.englishName }} </strong>
+        <strong class="text-md"> {{ item.englishName }} </strong>
         <span class="text-xs text-gray-500">{{
-          surah.englishNameTranslation
+          item.englishNameTranslation
         }}</span>
       </div>
     </div>
@@ -20,22 +22,30 @@
 </template>
 <script>
 import http from "@/api/http";
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { ref, watchEffect } from "vue";
 
 export default {
   name: "Left",
   async setup() {
-    const error = ref(null);
     const data = ref(null);
+    const error = ref(null);
+    const surah = ref(null);
+    const store = useStore();
+
+    watchEffect(() => {
+      const { payload } = store.getters;
+      surah.value = payload;
+    });
 
     try {
       const response = await http("/surah?per_page=114");
       data.value = response.data.data;
     } catch (e) {
-      error.value = e;
+      console.error(e);
     }
 
-    return { data, error };
+    return { data, error, surah };
   },
 };
 </script>

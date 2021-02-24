@@ -1,7 +1,7 @@
 <template>
-  <div v-if="card" class="w-full p-4 flex flex-col items-center md:relative">
+  <div v-if="card" class="flex flex-col w-full p-4 items-center md:relative">
     <div
-      v-for="(x, i) in 8"
+      v-for="(x, i) in 10"
       :key="i"
       class="bg-white w-full m-2 px-3 py-3 rounded-md"
     >
@@ -17,9 +17,9 @@
     </div>
   </div>
 
-  <div v-if="box" class="w-full p-4 flex flex-col md:relative">
+  <div v-if="box" class="flex flex-col w-full md:relative">
     <div
-      v-for="(item, index) in 8"
+      v-for="(item, index) in 10"
       :key="index"
       class="bg-white m-2 rounded-md p-6"
     >
@@ -41,28 +41,12 @@
           class="skeleton-box mt-3 h-5 w-full inline-block rounded-sm"
         ></span>
       </div>
-      <hr class="my-4" />
-      <div class="flex flex-wrap space-x-6">
+      <div class="flex my-4 flex-wrap space-x-6">
         <span
           v-for="(a, y) in 4"
           :key="y"
           class="skeleton-box inline-block w-6 h-6 md:absolute bg-green-root rounded-full text-white text-xs flex items-center justify-center"
         ></span>
-      </div>
-    </div>
-  </div>
-
-  <div v-if="form" class="bg-white m-2 rounded-md m-6 p-6">
-    <div class="flex mb-6 relative items-center">
-      <span
-        class="skeleton-box float-left inline-block w-6 h-6 md:absolute bg-green-root rounded-full text-white text-xs flex items-center"
-      ></span>
-      <span class="skeleton-box ml-3 h-5 w-1/2 inline-block rounded-sm"></span>
-    </div>
-    <div v-for="(c, u) in 3" :key="u" class="flex flex-col">
-      <div class="mt-3">
-        <span class="skeleton-box h-5 w-24 inline-block rounded-sm"></span>
-        <span class="skeleton-box h-5 w-full inline-block rounded-sm"></span>
       </div>
     </div>
   </div>
