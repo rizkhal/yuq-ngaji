@@ -4,7 +4,7 @@
       v-for="item in data"
       :key="item.number"
       :class="surah === item.number ? 'border-2 border-green-root' : ''"
-      class="cursor-pointer bg-white w-full border-2 border-white m-2 px-3 py-3 rounded-md"
+      class="cursor-pointer bg-white w-full shadow border-2 border-white m-2 px-3 py-3 rounded-md"
       @click="$emit('set', item.number)"
     >
       <span

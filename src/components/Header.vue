@@ -60,7 +60,7 @@
     </div>
 
     <div class="flex w-60 items-center justify-center">
-      <div class="mr-4">
+      <div class="mr-8">
         <button
           class="p-2 justify-center rounded-full bg-gray-100 text-gray-600 focus:outline-none"
         >
@@ -83,9 +83,9 @@
 
       <div class="flex justify-between items-center">
         <img
-          class="w-10 h-10 rounded-full"
+          class="w-10 h-10 rounded-full cursor-pointer"
           src="@/assets/ayu.jpg"
-          alt="Ayu Wahyuni"
+          alt="Profile Picture"
         />
         <!-- <p class="text-xs mx-4 text-gray-700">Rizkhal Lamaau</p> -->
       </div>

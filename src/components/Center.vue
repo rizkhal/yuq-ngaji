@@ -6,7 +6,7 @@
     v-for="(item, i) in ayahs"
     :key="i"
     :id="`box-${i}`"
-    class="bg-white max-w-2/4 m-2 border-2 border-white rounded-md p-6"
+    class="bg-white shadow max-w-2/4 m-2 border-2 border-white rounded-md p-6"
     :class="isActive[i] ? 'border-2 border-green-root' : ''"
   >
     <div class="flex justify-between">
