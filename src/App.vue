@@ -37,17 +37,18 @@
 </template>
 
 <script>
-import { ref, reactive, onErrorCaptured, defineAsyncComponent } from "vue";
+import { ref, onErrorCaptured, defineAsyncComponent } from "vue";
+
 import Header from "./components/Header.vue";
 import Sidebar from "./components/Sidebar.vue";
 import Loading from "./components/Loading.vue";
 
 const LeftAsync = defineAsyncComponent(() =>
-  import("./components/core/Left.vue" /* webpackChunkName: "surah" */)
+  import("./components/Left.vue" /* webpackChunkName: "surah" */)
 );
 
 const CenterAsync = defineAsyncComponent(() =>
-  import("./components/core/Center.vue" /* webpackChunkName: "ayah" */)
+  import("./components/Center.vue" /* webpackChunkName: "ayah" */)
 );
 
 export default {

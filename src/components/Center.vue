@@ -1,6 +1,6 @@
 <template>
   <div id="top"></div>
-  <Loading v-if="!loading" :box="true" />
+  <Loading v-if="isLoading" :box="true" />
   <div
     v-else
     v-for="(item, i) in ayahs"
@@ -10,7 +10,7 @@
     :class="isActive[i] ? 'border-2 border-green-root' : ''"
   >
     <div class="flex justify-between">
-      <span>{{ surah }}:{{ item.numberInSurah }}</span>
+      <span class="text-2xl font-medium text-green-root">{{ surah }}:{{ item.numberInSurah }}</span>
       <p class="text-2xl text-right pl-8 leading-loose">{{ item.text }}</p>
     </div>
     <div class="flex justify-start mt-12">
@@ -39,17 +39,18 @@
     </div>
     <div class="my-4 flex justify-center items-center">
       <span class="text-sm mr-2 text-gray-400">{{
-        elapsedtime[i] ?? "00:00"
+        elapsedtime[i] === 0 || !elapsedtime[i] ? "00:00" : elapsedtime[i]
       }}</span>
       <input
         min="0"
         type="range"
         :max="totaltime[i]"
         v-model="timeframe[i]"
-        class="cursor-pointer rounded-md overflow-hidden appearance-none bg-gray-300 h-1.5 w-11/12"
+        class="cursor-pointer rounded-md appearance-none overflow-hidden bg-gray-300 h-2 w-full focus:outline-none"
       />
       <div class="ml-2">
         <svg
+          @click="play(i)"
           v-if="!isActive[i]"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -58,18 +59,17 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="w-6 h-6 text-gray-400 cursor-pointer feather feather-play-circle"
-          @click="play(i)"
+          class="w-8 h-8 text-gray-400 cursor-pointer feather feather-play-circle"
         >
           <circle cx="12" cy="12" r="10"></circle>
           <polygon points="10 8 16 12 10 16 10 8"></polygon>
         </svg>
-        <!-- <svg
-          v-if="!isLoaded[i]"
-          class="animate-spin h-6 w-6 text-gray-400"
-          xmlns="http://www.w3.org/2000/svg"
+        <svg
+          v-if="isActive[i] && !isLoaded[i]"
           fill="none"
           viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="inline-flex justify-start animate-spin h-8 w-8 text-gray-400"
         >
           <circle
             class="opacity-25"
@@ -84,9 +84,10 @@
             fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>
-        </svg> -->
+        </svg>
         <svg
-          v-if="isActive[i]"
+          @click="pause(i)"
+          v-if="isActive[i] && isLoaded[i]"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -96,8 +97,7 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="w-6 h-6 text-gray-400 cursor-pointer feather feather-pause-circle"
-          @click="pause(i)"
+          class="w-8 h-8 text-gray-400 cursor-pointer feather feather-pause-circle"
         >
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="10" y1="15" x2="10" y2="9"></line>
@@ -105,7 +105,6 @@
         </svg>
       </div>
     </div>
-    <!-- <hr class="my-4" /> -->
     <div class="flex flex-wrap space-x-6">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +115,6 @@
         stroke-linecap="round"
         stroke-linejoin="round"
         class="w-4 h-4 text-gray-400 cursor-pointer feather feather-heart"
-        @click="like(i)"
       >
         <path
           d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
@@ -155,7 +153,6 @@
           d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
         ></path>
       </svg>
-      {{isLoaded[i]}}
     </div>
   </div>
 </template>
@@ -164,7 +161,6 @@ import http from "@/api/http";
 import { useStore } from "vuex";
 import { watchEffect, ref } from "vue";
 import Loading from "@/components/Loading.vue";
-import { create, get } from "@/services/likes";
 
 const timer = (seconds) => {
   const format = (val) => `0${Math.floor(val)}`.slice(-2);
@@ -190,12 +186,13 @@ export default {
     const meta = ref(null);
     const surah = ref(null);
     const ayahs = ref(null);
-    const store = useStore();
-    const loading = ref(false);
-    const player = new Audio();
+
     const isActive = ref([]);
     const isReadMore = ref([]);
     const isLoaded = ref([]);
+    const isLoading = ref(true);
+
+    const store = useStore();
 
     const duration = ref([]);
     const timeframe = ref([]);
@@ -203,18 +200,23 @@ export default {
     const elapsedtime = ref([]);
     const playbacktime = ref([]);
 
+    const player = new Audio();
+
     watchEffect(async () => {
       surah.value = props.surah;
-      loading.value = false;
-
       store.commit("setPayload", surah.value);
 
       try {
-        const response = await http(`/surah/${surah.value}?per_page=2000`);
+        isLoading.value = true;
+        const response = await http(`/surah/${surah.value}?per_page=286`);
         meta.value = response.meta;
         ayahs.value = response.data.data;
 
         ayahs.value.forEach((v, k) => {
+          totaltime.value[k] = 0;
+          timeframe.value[k] = 0;
+          elapsedtime.value[k] = 0;
+          isLoaded.value[k] = false;
           isActive.value[k] = false;
         });
 
@@ -222,7 +224,10 @@ export default {
           player.pause();
         }
 
-        loading.value = true;
+        isLoading.value = false;
+        totaltime.value[index.value] = 0;
+        timeframe.value[index.value] = 0;
+        elapsedtime.value[index.value] = 0;
       } catch (e) {
         console.error(e);
       }
@@ -232,27 +237,34 @@ export default {
       index.value = i;
 
       ayahs.value.forEach((v, k) => {
+        isLoaded.value[k] = false;
         isActive.value[k] = false;
       });
 
-      const { audio } = ayahs.value[i];
+      if (player.played) {
+        player.pause();
+      }
+
+      const { audio } = ayahs.value[index.value];
       player.src = audio;
 
-      player.addEventListener("loadedmetadata", () => {
+      if (
+        playbacktime.value[index.value] &&
+        playbacktime.value[index.value] != 0
+      ) {
+        timeframe.value[index.value] = playbacktime.value[index.value];
+        player.currentTime = playbacktime.value[index.value];
+      } else {
+        timeframe.value[index.value] = 0;
+      }
+
+      player.addEventListener("canplay", () => {
         isLoaded.value[i] = true;
       });
-      isLoaded.value[i] = false;
-
-      if (playbacktime.value[i] && playbacktime.value[i] != 0) {
-        timeframe.value[i] = playbacktime.value[i];
-        player.currentTime = playbacktime.value[i];
-      } else {
-        timeframe.value[i] = 0;
-      }
 
       player.play();
 
-      isActive.value[i] = true;
+      isActive.value[index.value] = true;
 
       player.addEventListener("ended", ended);
     };
@@ -276,6 +288,12 @@ export default {
         }
 
         player.src = nextPlay.audio;
+
+        isLoaded.value[nextIndex] = false;
+        player.addEventListener("canplay", () => {
+          isLoaded.value[nextIndex] = true;
+        });
+
         player.play();
 
         isActive.value[nextIndex] = true;
@@ -287,50 +305,49 @@ export default {
       if (state) {
         player.addEventListener("timeupdate", () => {
           totaltime.value[index.value] = Math.floor(player.duration);
-          timeframe.value[index.value] = Math.floor(player.currentTime);
-          elapsedtime.value[index.value] = timer(
-            Math.floor(player.currentTime)
-          );
+          timeframe.value[index.value] = player.currentTime;
+          elapsedtime.value[index.value] = timer(player.currentTime);
         });
       }
     });
 
-    const like = (i) => {
-      const { numberInSurah } = ayahs.value[i];
-    };
+    watchEffect(() => {
+      let playback = timeframe.value[index.value];
+      let diff = Math.abs(playback - player.currentTime);
+
+      if (diff > 0.01) {
+        player.currentTime = playback;
+      }
+    });
 
     return {
-      like,
       meta,
       play,
       pause,
       ayahs,
       surah,
       index,
-      loading,
+      isActive,
+      isLoaded,
+      isLoading,
       duration,
       timeframe,
       totaltime,
-      elapsedtime,
-      isActive,
-      isLoaded,
       isReadMore,
+      elapsedtime,
     };
   },
 };
 </script>
 
-<style lang="css" scoped>
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  input[type="range"]::-webkit-slider-thumb {
-    width: 15px;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 15px;
-    cursor: ew-resize;
-    background: #179f87;
-    box-shadow: -405px 0 0 400px #179f87;
-    border-radius: 50%;
-  }
+<style scoped>
+input[type="range"]::-webkit-slider-thumb {
+  width: 0;
+  height: 15px;
+  appearance: none;
+  border-radius: 50%;
+  background: #179f87;
+  -webkit-appearance: none;
+  box-shadow: -600px 0 0 600px #179f87;
 }
 </style>
