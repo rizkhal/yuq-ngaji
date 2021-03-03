@@ -11,15 +11,15 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, watchEffect, defineAsyncComponent } from "vue";
 import { getAllSurah } from "@/services/surah";
+import { ref, watchEffect, defineAsyncComponent } from "vue";
 
 const AsyncSurahCard = defineAsyncComponent(() =>
   import("./SurahCard.vue" /* webpackChunkName: "surah-card" */)
 );
 
 export default {
-  name: "Left",
+  name: "MobileLeft",
   components: {
     AsyncSurahCard,
   },

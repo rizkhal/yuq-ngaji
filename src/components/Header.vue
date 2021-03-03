@@ -1,5 +1,5 @@
 <template>
-  <header class="flex bg-white">
+  <header class="flex bg-white z-10 fixed w-full border-b-2 border-green-root">
     <div class="flex justify-center bg-green-root items-center py-4 px-6">
       <svg
         class="w-12 h-12 text-white"
@@ -37,7 +37,7 @@
     <div class="flex items-center justify-center w-full">
       <div class="relative w-full lg:mx-0">
         <!-- search icon -->
-        <span class="absolute inset-y-0 left-8 flex items-center">
+        <span class="absolute inset-y-0 left-4 flex items-center">
           <svg class="h-8 w-8 text-green-root" viewBox="0 0 24 24" fill="none">
             <path
               d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
@@ -53,42 +53,31 @@
         <input
           type="text"
           @input="onTyping"
-          placeholder="Search here for surah or ayah"
-          class="h-14 w-full text-xl pl-20 text-gray-400 rounded-full focus:border-green-600 focus:outline-none focus:ring"
+          placeholder="Search"
+          class="h-14 w-full text-xl pl-14 text-gray-400 rounded-full focus:border-green-600 focus:outline-none focus:ring"
         />
       </div>
     </div>
 
-    <div class="flex w-60 items-center justify-center">
-      <div class="mr-8">
-        <button
-          class="p-2 justify-center rounded-full bg-gray-100 text-gray-600 focus:outline-none"
+    <div class="flex w-20 items-center justify-end mr-6">
+      <button
+        class="p-2 justify-center rounded-full bg-gray-100 text-gray-600 focus:outline-none"
+      >
+        <svg
+          class="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <svg
-            class="w-6 h-6"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M15 17H20L18.5951 15.5951C18.2141 15.2141 18 14.6973 18 14.1585V11C18 8.38757 16.3304 6.16509 14 5.34142V5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5V5.34142C7.66962 6.16509 6 8.38757 6 11V14.1585C6 14.6973 5.78595 15.2141 5.40493 15.5951L4 17H9M15 17V18C15 19.6569 13.6569 21 12 21C10.3431 21 9 19.6569 9 18V17M15 17H9"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex justify-between items-center">
-        <img
-          class="w-10 h-10 rounded-full cursor-pointer"
-          src="@/assets/ayu.jpg"
-          alt="Profile Picture"
-        />
-        <!-- <p class="text-xs mx-4 text-gray-700">Rizkhal Lamaau</p> -->
-      </div>
+          <path
+            d="M15 17H20L18.5951 15.5951C18.2141 15.2141 18 14.6973 18 14.1585V11C18 8.38757 16.3304 6.16509 14 5.34142V5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5V5.34142C7.66962 6.16509 6 8.38757 6 11V14.1585C6 14.6973 5.78595 15.2141 5.40493 15.5951L4 17H9M15 17V18C15 19.6569 13.6569 21 12 21C10.3431 21 9 19.6569 9 18V17M15 17H9"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
     </div>
   </header>
 </template>
@@ -97,7 +86,7 @@
 export default {
   name: "Header",
   setup() {
-    // 
+    //
   },
 };
 </script>

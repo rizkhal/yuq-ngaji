@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex hidden lg:block">
     <div class="bg-white h-screen w-24 overflow-auto">
       <div class="flex my-6 flex-col justify-center items-center">
         <div class="p-3 bg-gray-200 rounded-md cursor-pointer">
