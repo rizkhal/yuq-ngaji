@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 
-import search from "./modules/search";
+import likes from "./modules/likes";
 
 export default createStore({
   state: {
@@ -20,6 +20,6 @@ export default createStore({
     payload: (state) => state.payload,
   },
   modules: {
-    search,
+    likes,
   },
 });

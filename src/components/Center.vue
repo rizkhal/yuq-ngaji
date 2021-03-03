@@ -10,7 +10,9 @@
     :class="isActive[i] ? 'border-2 border-green-root' : ''"
   >
     <div class="flex justify-between">
-      <span class="text-2xl font-medium text-green-root">{{ surah }}:{{ item.numberInSurah }}</span>
+      <span class="text-2xl font-medium text-green-root"
+        >{{ surah }}:{{ item.numberInSurah }}</span
+      >
       <p class="text-2xl text-right pl-8 leading-loose">{{ item.text }}</p>
     </div>
     <div class="flex justify-start mt-12">
@@ -107,6 +109,7 @@
     </div>
     <div class="flex flex-wrap space-x-6">
       <svg
+        @click="like(i)"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="red"
@@ -159,15 +162,9 @@
 <script>
 import http from "@/api/http";
 import { useStore } from "vuex";
+import { timer } from "@/lib/helper";
 import { watchEffect, ref } from "vue";
 import Loading from "@/components/Loading.vue";
-
-const timer = (seconds) => {
-  const format = (val) => `0${Math.floor(val)}`.slice(-2);
-  var hours = seconds / 3600;
-  var minutes = (seconds % 3600) / 60;
-  return [minutes, seconds % 60].map(format).join(":");
-};
 
 export default {
   name: "Center",
@@ -320,7 +317,17 @@ export default {
       }
     });
 
+    const like = async (i) => {
+      const { number } = ayahs.value[i];
+
+      await store.dispatch("setLikes", {
+        ayah: number,
+        surah: surah.value,
+      });
+    };
+
     return {
+      like,
       meta,
       play,
       pause,

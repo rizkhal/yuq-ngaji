@@ -11,7 +11,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { getAllSurah } from "@/services/surah";
+import { getAllSurah } from "@/services/quran";
 import { ref, watchEffect, defineAsyncComponent } from "vue";
 
 const AsyncSurahCard = defineAsyncComponent(() =>

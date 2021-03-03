@@ -21,6 +21,7 @@ module.exports = {
       colors: {
         green: {
           root: "#179f87",
+          shadow: "#37c7ae",
         },
       },
       fontSize: {

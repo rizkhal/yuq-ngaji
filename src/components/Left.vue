@@ -12,7 +12,7 @@
 <script>
 import { useStore } from "vuex";
 import { ref, watchEffect, defineAsyncComponent } from "vue";
-import { getAllSurah } from "@/services/surah";
+import { getAllSurah } from "@/services/quran";
 
 const AsyncSurahCard = defineAsyncComponent(() =>
   import("./SurahCard.vue" /* webpackChunkName: "surah-card" */)
