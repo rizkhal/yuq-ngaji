@@ -23,14 +23,23 @@
       <span class="text-orange-300">SEE TAFSIR</span> -->
     </div>
     <div class="mt-3" v-if="keyword">
-      <p
-        v-html="
-          item.indonesianTranslation.replace(
-            new RegExp(keyword, 'gi'),
-            (match) => `<span class='text-white bg-green-root'>${match}</span>`
-          )
-        "
-      ></p>
+      <div v-if="!isReadMore[i]">
+        <p
+          v-html="highlight(item.indonesianTranslation.slice(0, 290), keyword)"
+        ></p>
+      </div>
+      <div v-else>
+        <p v-html="highlight(item.indonesianTranslation, keyword)"></p>
+      </div>
+      <span
+        class="text-green-root cursor-pointer"
+        @click="isReadMore[i] = !isReadMore[i]"
+      >
+        <span v-if="!isReadMore[i] && item.indonesianTranslation.length > 289"
+          >Lanjutkan membaca</span
+        >
+        <span v-if="isReadMore[i]">Tutup</span>
+      </span>
     </div>
     <div class="mt-3" v-else>
       <p v-if="!isReadMore[i]">
@@ -173,6 +182,7 @@
 <script>
 import http from "@/api/http";
 import { useStore } from "vuex";
+import { highlight } from "@/lib/helper";
 import { ref, watch, watchEffect } from "vue";
 import Loading from "@/components/layouts/Loading.vue";
 import { useMediaPlayer, useMediaPlayerMeta } from "@/hooks/player";
@@ -213,18 +223,29 @@ export default {
       surah.value = props.surah;
 
       try {
-        const response = await http(`/surah/${surah.value}?per_page=286`);
-        const {
-          meta,
-          data: { data },
-        } = await response;
+        const surahInLocal = JSON.parse(
+          window.localStorage.getItem(`surah-${surah.value}`)
+        );
 
-        store.dispatch("setSurah", meta);
-        store.dispatch("setPayload", data);
+        if (!surahInLocal) {
+          const response = await http(`/surah/${surah.value}?per_page=286`);
+          const result = await response;
+
+          info.value = result.meta;
+          ayahs.value = result.data.data;
+
+          window.localStorage.setItem(
+            `surah-${surah.value}`,
+            JSON.stringify(result)
+          );
+        } else {
+          info.value = surahInLocal.meta;
+          ayahs.value = surahInLocal.data.data;
+        }
+
+        store.dispatch("setSurah", info.value);
+        store.dispatch("setPayload", ayahs.value);
         store.dispatch("setNumberOfSurah", surah.value);
-
-        info.value = meta;
-        ayahs.value = data;
       } catch (e) {
         console.error(e);
       } finally {
@@ -254,6 +275,7 @@ export default {
       loaded,
       loading,
       keyword,
+      highlight,
       timeframe,
       totaltime,
       isReadMore,

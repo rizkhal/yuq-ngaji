@@ -39,9 +39,9 @@ export function setNull(obj) {
  * @param {String} content content
  * @param {String} keyword query of search
  */
-const highlight = (content, keyword) => {
+export function highlight(content, keyword) {
   return content.replace(
     new RegExp(keyword, "gi"),
     (match) => `<mark>${match}</mark>`
   );
-};
+}
