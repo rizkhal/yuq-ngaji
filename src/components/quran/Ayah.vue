@@ -9,13 +9,13 @@
     :class="active[i] ? 'border-2 border-green-root' : ''"
   >
     <div class="flex justify-between">
-      <span class="text-2xl font-medium text-green-root"
+      <span class="text-2xl font-medium text-green-text"
         >{{ surah }}:{{ item.numberInSurah }}</span
       >
       <p class="text-2xl text-right pl-8 leading-loose">{{ item.text }}</p>
     </div>
     <div class="flex justify-start mt-12">
-      <span class="text-green-root uppercase"
+      <span class="text-green-text uppercase"
         >INDONESIA - {{ info.translator }}</span
       >
       <!-- bellow in next release -->
@@ -49,27 +49,29 @@
       <div v-else>
         <p>{{ item.indonesianTranslation }}</p>
       </div>
-      <span
-        class="text-green-root cursor-pointer"
+      <p
+        class="text-blue-500 cursor-pointer"
         @click="isReadMore[i] = !isReadMore[i]"
       >
         <span v-if="!isReadMore[i] && item.indonesianTranslation.length > 289"
           >Lanjutkan membaca</span
         >
         <span v-if="isReadMore[i]">Tutup</span>
-      </span>
+      </p>
     </div>
     <div class="my-4 flex justify-center items-center">
-      <label class="text-sm mr-2 text-gray-700">{{
-        elapsedtime[i] === 0 || !elapsedtime[i] ? "00:00" : elapsedtime[i]
-      }}</label>
-      <input
-        min="0"
-        type="range"
-        v-model="timeframe[i]"
-        :max="totaltime[i] === 0 || !totaltime[i] ? 0 : totaltime[i]"
-        class="cursor-pointer rounded-md appearance-none overflow-hidden bg-gray-300 h-2 w-full focus:outline-none"
-      />
+      <form class="w-full flex my-4 justify-center items-center">
+        <label class="text-sm mr-2 text-gray-700">{{
+          elapsedtime[i] === 0 || !elapsedtime[i] ? "00:00" : elapsedtime[i]
+        }}</label>
+        <input
+          min="0"
+          type="range"
+          v-model="timeframe[i]"
+          :max="totaltime[i] === 0 || !totaltime[i] ? 0 : totaltime[i]"
+          class="player cursor-pointer rounded-md appearance-none overflow-hidden bg-gray-300 h-2 w-full focus:outline-none"
+        />
+      </form>
       <div class="ml-2">
         <svg
           @click="playToggle(i)"
@@ -287,15 +289,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-input[type="range"]::-webkit-slider-thumb {
-  width: 0;
-  height: 15px;
-  appearance: none;
-  border-radius: 50%;
-  background: #179f87;
-  -webkit-appearance: none;
-  box-shadow: -600px 0 0 600px #179f87;
-}
-</style>

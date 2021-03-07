@@ -52,10 +52,10 @@
         <!-- search input -->
         <div
           @click="modalOpen = true"
-          class="bg-white py-6 w-full text-lg pl-14 text-gray-400 cursor-pointer"
+          class="py-6 w-full text-lg pl-14 text-gray-400 cursor-pointer"
         >
-          <span class="hidden lg:block">Quick search for anything...</span>
-          <span class="block lg:hidden">Search</span>
+          <p class="hidden lg:block">Quick search for anything...</p>
+          <p class="block lg:hidden">Search</p>
         </div>
       </div>
     </div>

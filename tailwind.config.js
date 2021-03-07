@@ -22,6 +22,7 @@ module.exports = {
         green: {
           root: "#179f87",
           shadow: "#37c7ae",
+          text: "#077764"
         },
       },
       fontSize: {

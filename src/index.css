@@ -19,3 +19,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #138b75;
 }
+
+.player::-webkit-slider-thumb {
+  width: 0;
+  height: 15px;
+  appearance: none;
+  border-radius: 50%;
+  background: #179f87;
+  -webkit-appearance: none;
+  box-shadow: -600px 0 0 600px #179f87;
+}
