@@ -151,37 +151,37 @@ if ("mediaSession" in navigator) {
         artwork: [
           {
             src:
-              "https://media.istockphoto.com/photos/quran-open-on-stand-near-mosque-floor-picture-id469201837?k=6&m=469201837&s=612x612&w=0&h=lfnX9rQ6o6PhQhSN0y44kf1I5jinJ20Gh8T-Jlhqi84=",
+              "https://i2.wp.com/cdn.iconscout.com/icon/free/png-512/quran-1698954-1457546.png",
             sizes: "96x96",
             type: "image/png",
           },
           {
             src:
-              "https://media.istockphoto.com/photos/quran-open-on-stand-near-mosque-floor-picture-id469201837?k=6&m=469201837&s=612x612&w=0&h=lfnX9rQ6o6PhQhSN0y44kf1I5jinJ20Gh8T-Jlhqi84=",
+              "https://i2.wp.com/cdn.iconscout.com/icon/free/png-512/quran-1698954-1457546.png",
             sizes: "128x128",
             type: "image/png",
           },
           {
             src:
-              "https://media.istockphoto.com/photos/quran-open-on-stand-near-mosque-floor-picture-id469201837?k=6&m=469201837&s=612x612&w=0&h=lfnX9rQ6o6PhQhSN0y44kf1I5jinJ20Gh8T-Jlhqi84=",
+              "https://i2.wp.com/cdn.iconscout.com/icon/free/png-512/quran-1698954-1457546.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
             src:
-              "https://media.istockphoto.com/photos/quran-open-on-stand-near-mosque-floor-picture-id469201837?k=6&m=469201837&s=612x612&w=0&h=lfnX9rQ6o6PhQhSN0y44kf1I5jinJ20Gh8T-Jlhqi84=",
+              "https://i2.wp.com/cdn.iconscout.com/icon/free/png-512/quran-1698954-1457546.png",
             sizes: "256x256",
             type: "image/png",
           },
           {
             src:
-              "https://media.istockphoto.com/photos/quran-open-on-stand-near-mosque-floor-picture-id469201837?k=6&m=469201837&s=612x612&w=0&h=lfnX9rQ6o6PhQhSN0y44kf1I5jinJ20Gh8T-Jlhqi84=",
+              "https://i2.wp.com/cdn.iconscout.com/icon/free/png-512/quran-1698954-1457546.png",
             sizes: "384x384",
             type: "image/png",
           },
           {
             src:
-              "https://media.istockphoto.com/photos/quran-open-on-stand-near-mosque-floor-picture-id469201837?k=6&m=469201837&s=612x612&w=0&h=lfnX9rQ6o6PhQhSN0y44kf1I5jinJ20Gh8T-Jlhqi84=",
+              "https://i2.wp.com/cdn.iconscout.com/icon/free/png-512/quran-1698954-1457546.png",
             sizes: "512x512",
             type: "image/png",
           },
