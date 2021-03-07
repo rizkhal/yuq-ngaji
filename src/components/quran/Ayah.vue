@@ -50,7 +50,7 @@
         <p>{{ item.indonesianTranslation }}</p>
       </div>
       <p
-        class="text-blue-500 cursor-pointer"
+        class="text-green-text cursor-pointer"
         @click="isReadMore[i] = !isReadMore[i]"
       >
         <span v-if="!isReadMore[i] && item.indonesianTranslation.length > 289"
@@ -61,16 +61,20 @@
     </div>
     <div class="my-4 flex justify-center items-center">
       <form class="w-full flex my-4 justify-center items-center">
-        <label class="text-sm mr-2 text-gray-700">{{
-          elapsedtime[i] === 0 || !elapsedtime[i] ? "00:00" : elapsedtime[i]
-        }}</label>
-        <input
-          min="0"
-          type="range"
-          v-model="timeframe[i]"
-          :max="totaltime[i] === 0 || !totaltime[i] ? 0 : totaltime[i]"
-          class="player cursor-pointer rounded-md appearance-none overflow-hidden bg-gray-300 h-2 w-full focus:outline-none"
-        />
+        <p class="text-sm mr-2 text-gray-700">
+          {{
+            elapsedtime[i] === 0 || !elapsedtime[i] ? "00:00" : elapsedtime[i]
+          }}
+        </p>
+        <label class="w-full">
+          <input
+            min="0"
+            type="range"
+            v-model="timeframe[i]"
+            :max="totaltime[i] === 0 || !totaltime[i] ? 0 : totaltime[i]"
+            class="player cursor-pointer rounded-md appearance-none overflow-hidden bg-gray-300 h-2 w-full focus:outline-none"
+          />
+        </label>
       </form>
       <div class="ml-2">
         <svg
