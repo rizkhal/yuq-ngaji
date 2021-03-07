@@ -1,21 +1,22 @@
 <template>
   <div class="p-4">
     <AsyncSurahCard
-      v-for="item in data"
+      v-for="item in surahs"
       :key="item.number"
       :item="item"
       :surah="surah"
+      :id="`surah-${surah}`"
       @click="$emit('set', item.number)"
     />
   </div>
 </template>
 <script>
 import { useStore } from "vuex";
+import { useSurah } from "@/hooks/quran";
 import { ref, watchEffect, defineAsyncComponent } from "vue";
-import { getAllSurah } from "@/services/quran";
 
 const AsyncSurahCard = defineAsyncComponent(() =>
-  import("./SurahCard.vue" /* webpackChunkName: "surah-card" */)
+  import("../layouts/Card.vue" /* webpackChunkName: "surah-card" */)
 );
 
 export default {
@@ -24,24 +25,16 @@ export default {
     AsyncSurahCard,
   },
   async setup() {
-    const data = ref(null);
-    const error = ref(null);
     const surah = ref(null);
     const store = useStore();
+    const { surahs } = await useSurah();
 
     watchEffect(() => {
-      const { payload } = store.getters;
-      surah.value = payload;
+      const { numberOfSurah } = store.getters;
+      surah.value = numberOfSurah;
     });
 
-    try {
-      const response = await getAllSurah();
-      data.value = response.data.data;
-    } catch (e) {
-      console.error(e);
-    }
-
-    return { data, error, surah };
+    return { surah, surahs };
   },
 };
 </script>

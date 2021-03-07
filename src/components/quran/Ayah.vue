@@ -1,13 +1,12 @@
 <template>
   <div id="top"></div>
-  <Loading v-if="isLoading" :box="true" />
+  <Loading v-if="loading" :box="true" />
   <div
-    v-else
     v-for="(item, i) in ayahs"
     :key="i"
     :id="`box-${i}`"
     class="bg-white shadow max-w-2/4 m-2 border-2 border-white rounded-md p-6"
-    :class="isActive[i] ? 'border-2 border-green-root' : ''"
+    :class="active[i] ? 'border-2 border-green-root' : ''"
   >
     <div class="flex justify-between">
       <span class="text-2xl font-medium text-green-root"
@@ -17,18 +16,30 @@
     </div>
     <div class="flex justify-start mt-12">
       <span class="text-green-root uppercase"
-        >INDONESIA - {{ meta.translator }}</span
+        >INDONESIA - {{ info.translator }}</span
       >
       <!-- bellow in next release -->
       <!-- <span class="mx-2 text-gray-300">|</span>
       <span class="text-orange-300">SEE TAFSIR</span> -->
     </div>
-    <div class="mt-3">
+    <div class="mt-3" v-if="keyword">
+      <p
+        v-html="
+          item.indonesianTranslation.replace(
+            new RegExp(keyword, 'gi'),
+            (match) => `<span class='text-white bg-green-root'>${match}</span>`
+          )
+        "
+      ></p>
+    </div>
+    <div class="mt-3" v-else>
       <p v-if="!isReadMore[i]">
         {{ item.indonesianTranslation.slice(0, 290) }}
         <span v-if="item.indonesianTranslation.length > 289">...</span>
       </p>
-      <p v-else>{{ item.indonesianTranslation }}</p>
+      <div v-else>
+        <p>{{ item.indonesianTranslation }}</p>
+      </div>
       <span
         class="text-green-root cursor-pointer"
         @click="isReadMore[i] = !isReadMore[i]"
@@ -46,14 +57,14 @@
       <input
         min="0"
         type="range"
-        :max="totaltime[i]"
         v-model="timeframe[i]"
+        :max="totaltime[i] === 0 || !totaltime[i] ? 0 : totaltime[i]"
         class="cursor-pointer rounded-md appearance-none overflow-hidden bg-gray-300 h-2 w-full focus:outline-none"
       />
       <div class="ml-2">
         <svg
-          @click="play(i)"
-          v-if="!isActive[i]"
+          @click="playToggle(i)"
+          v-if="!active[i]"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="none"
@@ -67,7 +78,7 @@
           <polygon points="10 8 16 12 10 16 10 8"></polygon>
         </svg>
         <svg
-          v-if="isActive[i] && !isLoaded[i]"
+          v-if="active[i] && !loaded[i]"
           fill="none"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -88,8 +99,8 @@
           ></path>
         </svg>
         <svg
-          @click="pause(i)"
-          v-if="isActive[i] && isLoaded[i]"
+          @click="pauseToggle(i)"
+          v-if="active[i] && loaded[i]"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -109,7 +120,6 @@
     </div>
     <div class="flex flex-wrap space-x-6">
       <svg
-        @click="like(i)"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="red"
@@ -159,12 +169,13 @@
     </div>
   </div>
 </template>
+
 <script>
 import http from "@/api/http";
 import { useStore } from "vuex";
-import { timer } from "@/lib/helper";
-import { watchEffect, ref } from "vue";
-import Loading from "@/components/Loading.vue";
+import { ref, watch, watchEffect } from "vue";
+import Loading from "@/components/layouts/Loading.vue";
+import { useMediaPlayer, useMediaPlayerMeta } from "@/hooks/player";
 
 export default {
   name: "Center",
@@ -179,169 +190,77 @@ export default {
     },
   },
   async setup(props) {
-    const index = ref(0);
-    const meta = ref(null);
-    const surah = ref(null);
+    const info = ref(null);
+    const surah = ref(1);
     const ayahs = ref(null);
-
-    const isActive = ref([]);
-    const isReadMore = ref([]);
-    const isLoaded = ref([]);
-    const isLoading = ref(true);
-
+    const loading = ref(false);
     const store = useStore();
+    const isReadMore = ref([]);
+    const keyword = ref(null);
+    const { onPlay, onPause } = useMediaPlayer();
 
-    const duration = ref([]);
-    const timeframe = ref([]);
-    const totaltime = ref([]);
-    const elapsedtime = ref([]);
-    const playbacktime = ref([]);
-
-    const player = new Audio();
+    const {
+      active,
+      loaded,
+      timeframe,
+      totaltime,
+      elapsedtime,
+      playbacktime,
+    } = useMediaPlayerMeta();
 
     watchEffect(async () => {
+      loading.value = true;
       surah.value = props.surah;
-      store.commit("setPayload", surah.value);
 
       try {
-        isLoading.value = true;
         const response = await http(`/surah/${surah.value}?per_page=286`);
-        meta.value = response.meta;
-        ayahs.value = response.data.data;
+        const {
+          meta,
+          data: { data },
+        } = await response;
 
-        ayahs.value.forEach((v, k) => {
-          totaltime.value[k] = 0;
-          timeframe.value[k] = 0;
-          elapsedtime.value[k] = 0;
-          isLoaded.value[k] = false;
-          isActive.value[k] = false;
-        });
+        store.dispatch("setSurah", meta);
+        store.dispatch("setPayload", data);
+        store.dispatch("setNumberOfSurah", surah.value);
 
-        if (player.played) {
-          player.pause();
-        }
-
-        isLoading.value = false;
-        totaltime.value[index.value] = 0;
-        timeframe.value[index.value] = 0;
-        elapsedtime.value[index.value] = 0;
+        info.value = meta;
+        ayahs.value = data;
       } catch (e) {
         console.error(e);
+      } finally {
+        loading.value = false;
       }
     });
 
-    const play = (i) => {
-      index.value = i;
-
-      ayahs.value.forEach((v, k) => {
-        isLoaded.value[k] = false;
-        isActive.value[k] = false;
-      });
-
-      if (player.played) {
-        player.pause();
-      }
-
-      const { audio } = ayahs.value[index.value];
-      player.src = audio;
-
-      if (
-        playbacktime.value[index.value] &&
-        playbacktime.value[index.value] != 0
-      ) {
-        timeframe.value[index.value] = playbacktime.value[index.value];
-        player.currentTime = playbacktime.value[index.value];
-      } else {
-        timeframe.value[index.value] = 0;
-      }
-
-      player.addEventListener("canplay", () => {
-        isLoaded.value[i] = true;
-      });
-
-      player.play();
-
-      isActive.value[index.value] = true;
-
-      player.addEventListener("ended", ended);
+    const playToggle = (index) => {
+      onPlay(index);
     };
 
-    const pause = (i) => {
-      isActive.value[i] = false;
-      playbacktime.value[i] = player.currentTime;
-      player.pause();
+    const pauseToggle = (index) => {
+      onPause(index);
     };
 
-    const ended = () => {
-      isActive.value[index.value] = false;
-
-      let nextIndex = (index.value += 1);
-
-      const nextPlay = ayahs.value[nextIndex];
-      if (nextPlay) {
-        const el = document.getElementById(`box-${nextIndex}`);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-
-        player.src = nextPlay.audio;
-
-        isLoaded.value[nextIndex] = false;
-        player.addEventListener("canplay", () => {
-          isLoaded.value[nextIndex] = true;
-        });
-
-        player.play();
-
-        isActive.value[nextIndex] = true;
+    watch(
+      () => store.getters.query,
+      (prev, next) => {
+        keyword.value = prev;
       }
-    };
-
-    watchEffect(() => {
-      const state = isActive.value[index.value];
-      if (state) {
-        player.addEventListener("timeupdate", () => {
-          totaltime.value[index.value] = Math.floor(player.duration);
-          timeframe.value[index.value] = player.currentTime;
-          elapsedtime.value[index.value] = timer(player.currentTime);
-        });
-      }
-    });
-
-    watchEffect(() => {
-      let playback = timeframe.value[index.value];
-      let diff = Math.abs(playback - player.currentTime);
-
-      if (diff > 0.01) {
-        player.currentTime = playback;
-      }
-    });
-
-    const like = async (i) => {
-      const { number } = ayahs.value[i];
-
-      await store.dispatch("setLikes", {
-        ayah: number,
-        surah: surah.value,
-      });
-    };
+    );
 
     return {
-      like,
-      meta,
-      play,
-      pause,
+      info,
       ayahs,
-      surah,
-      index,
-      isActive,
-      isLoaded,
-      isLoading,
-      duration,
+      active,
+      loaded,
+      loading,
+      keyword,
       timeframe,
       totaltime,
       isReadMore,
+      playToggle,
+      pauseToggle,
       elapsedtime,
+      playbacktime,
     };
   },
 };

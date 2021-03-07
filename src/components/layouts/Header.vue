@@ -50,12 +50,13 @@
         </span>
 
         <!-- search input -->
-        <input
-          type="text"
-          placeholder="Quick search for anything"
-          @focus="modalOpen = true"
-          class="h-14 w-full text-lg pl-14 text-gray-400 rounded-full focus:border-green-600 focus:outline-none focus:ring"
-        />
+        <div
+          @click="modalOpen = true"
+          class="py-6 w-full text-lg pl-14 text-gray-400 cursor-pointer"
+        >
+          <span class="hidden lg:block">Quick search for anything...</span>
+          <span class="block lg:hidden">Search</span>
+        </div>
       </div>
     </div>
 
@@ -80,114 +81,17 @@
       </button>
     </div>
   </header>
-  <Modal :open="modalOpen" :close-btn="true">
-    <template #content>
-      <div class="bg-white fixed top-10 inset-x-10 h-5/6 rounded-md">
-        <div class="sticky p-2">
-          <span class="absolute top-0 inset-y-0 left-6 flex items-center">
-            <svg
-              class="h-6 w-6 text-green-root"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-
-          <input
-            type="text"
-            @keyup="onTyping"
-            placeholder="Search here for surah, ayah"
-            class="w-full h-20 text-lg pl-14 text-gray-400 focus:border-green-600 focus:outline-none focus:ring"
-          />
-          <hr />
-        </div>
-        <div class="px-6 pt-0 w-full overflow-y-auto h-3/4">
-          <p class="p-4 text-gray-600 text-center" v-if="!data && !loading">
-            No recent searches
-          </p>
-          <p class="p-4 text-gray-600 text-center" v-if="error">
-            {{ error }} 😔
-          </p>
-          <div class="flex flex-col" v-if="!loading">
-            <div
-              v-for="(item, index) in data"
-              :key="index"
-              class="w-full bg-green-shadow p-4 mt-2 rounded-md"
-            >
-              <p class="text-white font-medium">
-                Surah {{ item.surah.englishName }} ({{
-                  item.surah.englishNameTranslation
-                }}) ayah {{ item.numberInSurah }}
-              </p>
-            </div>
-          </div>
-          <div v-else class="mt-20 flex justify-center items-center">
-            <svg
-              class="animate-spin h-16 w-16 text-gray-200"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </template>
-  </Modal>
 </template>
 
 <script>
-import { ref } from "vue";
-import http from "@/api/http";
-import { useState } from "@/lib/state";
-import Modal from "@/components/Modal.vue";
+import { useState } from "@/hooks/state";
 
 export default {
   name: "Header",
-  components: {
-    Modal,
-  },
   setup() {
-    const data = ref(null);
-    const error = ref(null);
-    const loading = ref(false);
     const { modalOpen } = useState();
-    const onTyping = async (e) => {
-      try {
-        loading.value = true;
-        let query = e.target.value;
 
-        const response = await http(`/search?surah=1&query=${query}`);
-        if (response.data) {
-          data.value = response.data.matches[0];
-        }
-        loading.value = false;
-      } catch (e) {
-        error.value = e;
-      }
-    };
-
-    return { modalOpen, onTyping, data, loading, error };
+    return { modalOpen };
   },
 };
 </script>

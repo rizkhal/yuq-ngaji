@@ -2,6 +2,7 @@
   <div class="w-full flex flex-col items-center md:relative">
     <div
       :key="item.number"
+      :id="`surah-${item.number}`"
       :class="surah === item.number ? 'border-2 border-green-root' : ''"
       class="cursor-pointer bg-white w-full shadow border-2 border-white m-2 px-3 py-3 rounded-md"
     >

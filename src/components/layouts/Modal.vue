@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { useState } from "@/lib/state";
+import { useState } from "@/hooks/state";
 
 export default {
   name: "Modal",
