@@ -147,8 +147,8 @@
         </div>
       </main>
 
-      <button
-        class="fixed right-5 bottom-5 bg-gray-900 p-2 rounded-full block lg:hidden"
+      <div
+        class="fixed right-5 bottom-5 bg-gray-900 p-2 rounded-full block lg:hidden cursor-pointer"
         @click="isOpen = !isOpen"
       >
         <svg
@@ -184,7 +184,7 @@
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
-      </button>
+      </div>
     </div>
   </div>
 </template>

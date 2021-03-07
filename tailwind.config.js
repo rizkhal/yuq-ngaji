@@ -25,8 +25,8 @@ module.exports = {
         },
       },
       fontSize: {
-        '1xs': ['0.60em']
-      }
+        "1xs": ["0.60em"],
+      },
     },
   },
   variants: {

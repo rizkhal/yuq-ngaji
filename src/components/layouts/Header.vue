@@ -52,7 +52,7 @@
         <!-- search input -->
         <div
           @click="modalOpen = true"
-          class="py-6 w-full text-lg pl-14 text-gray-400 cursor-pointer"
+          class="bg-white py-6 w-full text-lg pl-14 text-gray-400 cursor-pointer"
         >
           <span class="hidden lg:block">Quick search for anything...</span>
           <span class="block lg:hidden">Search</span>
@@ -61,8 +61,8 @@
     </div>
 
     <div class="flex w-20 items-center justify-end mr-6">
-      <button
-        class="p-2 justify-center rounded-full bg-gray-100 text-gray-600 focus:outline-none"
+      <div
+        class="cursor-pointer p-2 justify-center rounded-full bg-gray-100 text-gray-600 focus:outline-none"
       >
         <svg
           class="w-6 h-6"
@@ -78,7 +78,7 @@
             stroke-linejoin="round"
           />
         </svg>
-      </button>
+      </div>
     </div>
   </header>
 </template>

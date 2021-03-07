@@ -60,9 +60,9 @@
       </span>
     </div>
     <div class="my-4 flex justify-center items-center">
-      <span class="text-sm mr-2 text-gray-400">{{
+      <label class="text-sm mr-2 text-gray-700">{{
         elapsedtime[i] === 0 || !elapsedtime[i] ? "00:00" : elapsedtime[i]
-      }}</span>
+      }}</label>
       <input
         min="0"
         type="range"
