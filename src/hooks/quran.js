@@ -15,7 +15,6 @@ const useSurah = async () => {
       const response = await http("/surah?per_page=114");
       const results = await response.data.data;
 
-      console.log(results);
       window.localStorage.setItem("surah-name", JSON.stringify(results));
       state.surahs = results;
     } else {
